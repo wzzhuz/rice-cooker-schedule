@@ -52,6 +52,7 @@
 - [x] 归档本次变更的 proposal / design / tasks / spec 快照
 - [x] 生成 `README.md` 文件清单与预览说明
 - [x] 整理 `docs/` `prototype/` `previews/` 并打包归档压缩包
-- [ ] 使用 GitHub token 创建远程仓库并推送（待用户提供授权与仓库信息）
+- [x] 创建公开仓库 `wzzhuz/rice-cooker-schedule` 并推送完整历史
+- [x] 配置 GitHub Actions 自动编译（校验 / 26 项验收 / 预览 / dist / artifact），CI 全绿
 
 > 规格 delta 已合并进 `openspec/specs/schedule-list/spec.md`，归档目录中的 `specs/` 仅保留变更快照供追溯。

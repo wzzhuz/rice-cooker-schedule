@@ -37,7 +37,8 @@
 - HTML5 + 原生 CSS（CSS 变量切换深浅色）+ 原生 ES2020 JavaScript，无第三方依赖。
 - `localStorage` 键 `rice_cooker_v5`，结构 `{ targets: string[], stepMinutes: number }`；兼容迁移 `rice_cooker_v4` / `rice_cooker_v3`。
 - 验收用 Playwright 无头浏览器 + URL 参数 `?sim=<ISO datetime>` 注入模拟时间，界面上无演示控件。
-- 仓库侧 CI：`.github/workflows/build.yml` + `.github/scripts/build.py`，push/PR 自动做文件校验、JS 语法检查、26 项浏览器验收、重生成预览、组装 `dist/`、打包并发布 GitHub Pages。**原型本身仍无构建步骤、无依赖**，CI 只是验收与发布流水线。
+- 公开仓库：`wzzhuz/rice-cooker-schedule`。
+- 仓库侧 CI：`.github/workflows/build.yml` + `.github/scripts/build.py`，push/PR 自动做文件校验、JS 语法检查、26 项浏览器验收、重生成预览、组装 `dist/`、打包并上传 artifact；只申请 `contents: read`，不依赖 Pages 权限。**原型本身仍无构建步骤、无依赖**，CI 只是验收与打包流水线。
 
 ## Key Decisions
 
