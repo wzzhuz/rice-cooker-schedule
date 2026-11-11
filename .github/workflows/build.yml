@@ -61,9 +61,14 @@ jobs:
         with:
           path: dist/
 
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: 部署 Pages（原型在线预览）
-        if: github.event_name != 'pull_request'
         id: deployment
         uses: actions/deploy-pages@v4
-
-    # 本作业无需 environment 声明：deploy-pages 会自行创建 github-pages 环境

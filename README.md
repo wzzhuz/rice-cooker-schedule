@@ -3,6 +3,8 @@
 **版本**：v0.5（定稿）
 **归档日期**：2026-11-11
 **形态**：纯静态单页原型 + 需求与界面设计 + OpenSpec 规格
+**仓库**：`rice-cooker-schedule`（公开）
+**自动编译**：GitHub Actions `.github/workflows/build.yml`
 
 ---
 
@@ -24,6 +26,32 @@
 | `openspec/AGENTS.md` | 后续维护时的约定与验证方式 |
 | `openspec/specs/schedule-list/spec.md` | 当前生效的行为规格（Requirement + Scenario，可验收） |
 | `openspec/changes/archive/2026-11-11-rice-cooker-schedule/` | 本次变更的 proposal / design / tasks / spec delta，已归档 |
+| `.github/workflows/build.yml` | GitHub Actions：自动编译、验收、生成预览、发布 Pages |
+| `.github/scripts/build.py` | 构建脚本：文件校验、JS 语法检查、无头浏览器验收、打包 |
+
+> `dist/` 与 `电饭煲预约助手_项目归档.zip` 是自动编译的**产物**，不入库。
+
+---
+
+## 自动编译（GitHub Actions）
+
+项目是纯静态单页，没有传统意义上的「编译」。这里的「编译」定义为一条可复现的流水线：**校验 → 验收 → 生成预览 → 组装站点 → 打包 → 发布**。
+
+推送到 `main` 或提 PR 时自动触发，也可在 Actions 页手动运行：
+
+1. **文件校验**：12 项归档文件齐全、原型内联 JS 通过 `node --check`、规格里 Requirement / Scenario 数量达标。
+2. **浏览器验收**（Playwright + Chromium，26 项）：注入 `?sim=` 模拟时间，逐条核对 `spec.md` 的场景——睡前正常三行、部分行已过自动顺延、目标时刻已到跳 24 小时、自定义 25 分不整除 1440 的 `maxSet` 兜底、非法步进拦截、添加/删除/自动保存、夜间深色与日间浅色、无运行时错误。
+3. **生成预览**：把两张界面预览图重新渲染到 `dist/previews/`（与仓库中的归档图一致）。
+4. **组装站点**：`dist/` 放入原型入口 `index.html`、设计文档、OpenSpec 全文与 `BUILD_INFO.json`（版本、commit、验收通过数）。
+5. **打包**：生成 `电饭煲预约助手_项目归档.zip` 与 `rice-cooker-build` artifact（保留 30 天）。
+6. **发布**：`main` 分支自动启用并部署 GitHub Pages，原型可直接在线打开。
+
+本地复现：
+
+```bash
+pip install playwright && playwright install --with-deps chromium
+python .github/scripts/build.py          # 26/26 通过后会生成 dist/ 与归档 zip
+```
 
 ---
 
